@@ -21,6 +21,7 @@
 2. Built-in fault tolerance
 3. Schedule periodic updates to keep retrieved data current
 4. Respect robots.txt for politeness
+5. Observability/Logs/Metrics
 
 ## Design Diagram
 
