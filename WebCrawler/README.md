@@ -91,6 +91,35 @@ Implement a **retry mechanism** for failed URL fetch attempts.
 |                      | **Bloom Filter (Content Hashes)**| - Extremely memory-efficient<br>- Very fast checks                      | - False positives<br>- No actual data retrievable<br>- No deletions      |
 
 
+## Politeness
+
+
+---
+
+## Implementation Steps
+
+### 1. Respect `robots.txt`
+- Fetch and parse `robots.txt` once per domain.
+- Store rules in a metadata DB.
+- For each URL:
+  - Skip if disallowed.
+  - Check `Crawl-delay`. If too soon, requeue the URL; otherwise, crawl and update last crawl time.
+
+### 2. Rate Limiting
+- Limit to **1 request/second/domain**.
+- Use a central store (e.g., Redis) + sliding window to track domain requests.
+- Add **jitter** (random delay) to avoid synchronized retries from multiple crawlers.
+
+---
+
+## Summary
+Respect crawl rules, delay as needed, and coordinate crawlers using shared data stores and jitter to stay polite and efficient.
+
+
 
 ## Scalability
 
+
+
+
+https://blog.algomaster.io/p/rate-limiting-algorithms-explained-with-code
