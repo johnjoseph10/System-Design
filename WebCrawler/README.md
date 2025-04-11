@@ -79,7 +79,7 @@ Implement a **retry mechanism** for failed URL fetch attempts.
   - Messages not acknowledged (visibility timeout) will be retried.
 
 
-## 🧠 Duplicate Detection (Trade-offs)
+#### 🧠 Duplicate Detection (Trade-offs)
 
 | **Category**         | **Method**                     | **Pros**                                                                 | **Cons**                                                                 |
 |----------------------|--------------------------------|--------------------------------------------------------------------------|--------------------------------------------------------------------------|
@@ -96,30 +96,63 @@ Implement a **retry mechanism** for failed URL fetch attempts.
 
 ---
 
-## Implementation Steps
+### Implementation Steps
 
-### 1. Respect `robots.txt`
+#### 1. Respect `robots.txt`
 - Fetch and parse `robots.txt` once per domain.
 - Store rules in a metadata DB.
 - For each URL:
   - Skip if disallowed.
   - Check `Crawl-delay`. If too soon, requeue the URL; otherwise, crawl and update last crawl time.
 
-### 2. Rate Limiting
+#### 2. Rate Limiting
 - Limit to **1 request/second/domain**.
-- Use a central store (e.g., Redis) + sliding window to track domain requests.
+- Use a central store (e.g., Redis) + sliding window to track domain requests.  
+- Rate limiting algorithms : https://blog.algomaster.io/p/rate-limiting-algorithms-explained-with-code
 - Add **jitter** (random delay) to avoid synchronized retries from multiple crawlers.
 
 ---
 
-## Summary
-Respect crawl rules, delay as needed, and coordinate crawlers using shared data stores and jitter to stay polite and efficient.
-
-
-
 ## Scalability
 
+###  Crawler Size Calculation
+### Given:
+- **Network speed**: Lets assume the EC2 machine has a bandwidth of 50 Gbps (Gigabits per second)
+  - 50 Gbps = 50 × 10⁹ bits/second
+  - Bytes per second = (50 × 10⁹) / 8 = 6.25 × 10⁹ bytes/second
+
+- **Page size**: 2 MB = 2 × 10⁶ bytes
+
+- **Pages per second per instance**:
+  - Pages/sec = 6.25 × 10⁹ bytes/sec ÷ 2 × 10⁶ bytes/page = ~3,125 pages/sec
+  - Assume we run each instance at 1,000 pages/sec for headroom
+
+---
+
+### Time to Crawl 10 Billion Pages (With 1 Instance)
+
+- Total pages = 10 × 10⁹
+- Crawl rate = 1,000 pages/sec
+
+- Time in seconds = (10 × 10⁹) ÷ 1,000 = 10 × 10⁶ seconds = 10,000,000 seconds
+- Time in hours = 10,000,000 ÷ 3,600 ≈ 2,777.78 hours
+- Time in days = 2,777.78 ÷ 24 ≈ 115.74 days
+
+---
+
+### Number of Instances to Finish in 125 Hours
+
+- Required time = 125 hours
+- Number of instances = 2,777.78 ÷ 125 ≈ **22.22**
+
+---
+
+### ✅ Conclusion:
+You need **approximately 23 EC2 crawler instances** (each crawling 1,000 pages/sec) to crawl **10 billion pages** in **125 hours**.
 
 
 
-https://blog.algomaster.io/p/rate-limiting-algorithms-explained-with-code
+
+
+
+
