@@ -8,6 +8,7 @@ Redis keeps members **sorted by their score** — which makes it great for **ran
 - Each value is unique.
 - Each value has a score (floating-point).
 - Sorted by score, either ascending or descending.
+- A ZSET is Redis’s name for a Sorted Set data structure.
 
 ---
 
