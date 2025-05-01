@@ -1,5 +1,7 @@
 # Distributed Job Scheduler 
 
-## Clarifying Questions to Ask
+# Common Terms 
 
-1. 
+- [Count Min Sketch](fanout.md) 
+
+https://www.youtube.com/watch?v=NUCZcPXkPKY

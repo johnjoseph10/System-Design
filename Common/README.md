@@ -10,3 +10,4 @@
 - [Redis Sorted Set](./redis.sorted.set.md)  
 - [Citus](citus.md)  
 
+https://www.youtube.com/watch?v=NUCZcPXkPKY
