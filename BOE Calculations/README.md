@@ -20,3 +20,8 @@
 
 ## Throughput
 
+
+## Interesting Numbers
+
+- Number of Video view in Youtube: 5B + 70B shorts  = ~ 100B
+- Number of seconds in a day : 86000 : ~100K
