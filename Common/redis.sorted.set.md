@@ -24,6 +24,26 @@ Redis keeps members **sorted by their score** — which makes it great for **ran
 
 ---
 
+## Example: Add players and their scores
+- ZADD leaderboard 300 "Alice"
+- ZADD leaderboard 250 "Bob"
+- ZADD leaderboard 275 "Charlie"
+
+### Get top 3 players
+ZREVRANGE leaderboard 0 2 WITHSCORES
+###   1) "Alice"   2) "300"
+###   3) "Charlie" 4) "275"
+###   5) "Bob"     6) "250"
+
+### Increase Bob's score by 60
+ZINCRBY leaderboard 60 "Bob"
+### → "310"
+
+### Get Bob’s new rank (higher score = better rank)
+ZREVRANK leaderboard "Bob"
+### → 0  (Bob is now #1)
+
+
 ## 📌 Where It’s Used in System Design
 
 Sorted Sets shine when you need **fast, ranked, or time-ordered data retrieval**. Here’s where it shows up:
