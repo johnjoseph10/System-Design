@@ -9,5 +9,6 @@
 - [Redis Sentinel vs Redis Cluster](./redis.sentinel.vs.cluster.md)  
 - [Redis Sorted Set](./redis.sorted.set.md)  
 - [Citus](citus.md)  
+- [Cassandra](./cassandra.md)  
 
 https://www.youtube.com/watch?v=NUCZcPXkPKY
