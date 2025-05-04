@@ -10,5 +10,6 @@
 - [Redis Sorted Set](./redis.sorted.set.md)  
 - [Citus](citus.md)  
 - [Cassandra](./cassandra.md)  
+- [Apache Spark](./Apache%20Spark.md) 
 
 https://www.youtube.com/watch?v=NUCZcPXkPKY
